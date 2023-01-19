@@ -16,6 +16,7 @@ router.post('/', (req, res) => {
   file = req.files.file; 
   const FILES_PATH= path.join(DATA_PATH, file.name);
   console.log(FILES_PATH);   
+
   file.mv(FILES_PATH, (err) => {
     if (err) {
       console.log('err', err)

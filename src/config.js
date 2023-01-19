@@ -1,9 +1,14 @@
-const path = require('path'); 
 
-const FOLDER_NAME = 'files';  
-
+//CONFIGURATIONS: 
+// PORT: Listen port for the server
+// DATA_PATH: Here goes the files storage path
+    // win -> D:\\files\my-server\...
+    // linux -> /server/my-files/...
+// DIRECTORY_DELIMITER: https://server.ex/directory.nested.final-file 
+    // e.g: *, -, _
 
 module.exports = {
   PORT: 3000, 
-  DATA_PATH: path.join(__dirname, FOLDER_NAME)
-}
+  DATA_PATH: 'D:\\files',
+  DIRECTORY_DELIMITER: '.' 
+} 
