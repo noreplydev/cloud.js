@@ -2,7 +2,10 @@
 const {Router} = require('express'); 
 const path = require('path'); 
 const fs = require('fs'); 
-const {DATA_PATH} = require('../config.js'); 
+
+
+const {getQueryPath} = require('../utils/conversion.js')
+const {DATA_PATH, DIRECTORY_DELIMITER} = require('../config.js'); 
 
 const router = Router(); 
 
@@ -12,24 +15,29 @@ router.get('/:filepath?', async (req, res) => {
     directories: []
   }
 
+  const query = req.params.filepath || ''; // another path || root path
+  
+  const requestPath = getQueryPath(query); 
 
-  const nested = req.params.filepath || ''; // another path || root path
-  console.log(req.params.filepath)
-  const requestPath = path.join(DATA_PATH, nested);
-  console.log(req.method, '  ', requestPath, 'params', req.params.filepath); 
-  const entrys = await fs.promises.readdir(requestPath); 
+  try {
+    const entrys = await fs.promises.readdir(requestPath)
+    entrys.forEach(entry => {
+      const targetPath = path.join(requestPath, entry);
+      const isDirectory = fs.lstatSync(targetPath).isDirectory();
 
-  entrys.forEach(entry => {
-    const targetPath = path.join(requestPath, entry);
-    const isDirectory = fs.lstatSync(targetPath).isDirectory();
+      if (isDirectory) {
+        content.directories.push(entry); 
+      } else {
+        content.files.push(entry); 
+      }
+    })
+  } catch(err) {
+    res.status(404).json({
+      "Error": "404 Resource not found."
+    })
 
-    if (isDirectory) {
-      content.directories.push(entry); 
-    } else {
-      content.files.push(entry); 
-    }
-  })
-
+  } 
+  
   res.json({
     "root_directory": path.basename(DATA_PATH),
     "content": content, 
