@@ -32,7 +32,7 @@ router.get('/:filepath?', async (req, res) => {
       }
     })
   } catch(err) {
-    res.status(404).json({
+    return res.status(404).json({
       "Error": "404 Resource not found."
     })
 
