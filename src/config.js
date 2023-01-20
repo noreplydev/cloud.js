@@ -9,6 +9,6 @@
 
 module.exports = {
   PORT: 3000, 
-  DATA_PATH: '/Users/cristian/dev',
-  DIRECTORY_DELIMITER: '.' 
+  DATA_PATH: 'D:\\files',
+  DIRECTORY_DELIMITER: '-' 
 } 

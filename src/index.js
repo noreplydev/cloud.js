@@ -15,7 +15,7 @@ app.use(fileUpload());
 
 app.use('/', root); 
 app.use('/upload', upload); 
-app.use('/root', files)
+app.use('/files', files)
 
 app.listen(PORT, () => {
   console.log('listening on http://localhost:3000'); 
