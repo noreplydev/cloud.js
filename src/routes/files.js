@@ -17,7 +17,13 @@ router.get('/:filepath?', async (req, res) => {
   let content; 
 
   try {
-    content = await getDir(requestPath)
+    console.log(requestPath);
+     
+    if (fs.lstatSync(requestPath).isDirectory()) {
+      content = await getDir(requestPath)
+    } else {
+      return res.status(200).download(requestPath); 
+    }
   } catch(err) {
     return res.status(404).json({
       "Error": "404 Resource not found."
@@ -27,7 +33,8 @@ router.get('/:filepath?', async (req, res) => {
   return res.json({
     "root_directory": path.basename(DATA_PATH),
     "content": content, 
-    "count": content.files.length + content.directories.length 
+    "files_count": content.files.length,
+    "directory_count": content.directories.length
   }); 
 });
 

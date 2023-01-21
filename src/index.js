@@ -6,7 +6,8 @@ const path = require('path');
 //ROUTES 
 const root = require('./routes/root.js'); 
 const upload = require('./routes/upload.js');  
-const files = require('./routes/files.js'); 
+const files = require('./routes/files.js');
+const stats = require('./routes/stats.js'); 
 
 const app = express(); 
 
@@ -15,7 +16,8 @@ app.use(fileUpload());
 
 app.use('/', root); 
 app.use('/upload', upload); 
-app.use('/files', files)
+app.use('/files', files); 
+app.use('/stats', stats); 
 
 app.listen(PORT, () => {
   console.log('listening on http://localhost:3000'); 

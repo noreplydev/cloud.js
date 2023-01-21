@@ -14,6 +14,7 @@ function getQueryPath(query) {
   return requestedPath;
 }
 
+
 module.exports = {
   getQueryPath
 }

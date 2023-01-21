@@ -26,16 +26,21 @@ async function getDir(requestPath) {
     files: [], 
     directories: []
   }
+
   const entrys = await fs.promises.readdir(requestPath)
   
   entrys.forEach(entry => {
     const targetPath = path.join(requestPath, entry);
-    const isDirectory = fs.lstatSync(targetPath).isDirectory();
+    const target = fs.lstatSync(targetPath);
 
-    if (isDirectory) {
+    if (target.isDirectory()) {
       content.directories.push(entry); 
     } else {
-      content.files.push(entry); 
+      content.files.push({
+        name: entry, 
+        size: target.size / (1024*1024), 
+        extension: entry.split('.')[1]
+      }); 
     }
   })
 
