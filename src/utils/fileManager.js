@@ -20,6 +20,29 @@ function rmPath(path, isDirectory, res) {
   }
 }
 
+
+async function getDir(requestPath) {
+  const content = {
+    files: [], 
+    directories: []
+  }
+  const entrys = await fs.promises.readdir(requestPath)
+  
+  entrys.forEach(entry => {
+    const targetPath = path.join(requestPath, entry);
+    const isDirectory = fs.lstatSync(targetPath).isDirectory();
+
+    if (isDirectory) {
+      content.directories.push(entry); 
+    } else {
+      content.files.push(entry); 
+    }
+  })
+
+  return content; 
+}
+
 module.exports = {
-  rmPath
+  rmPath, 
+  getDir
 }

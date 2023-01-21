@@ -5,32 +5,19 @@ const fs = require('fs');
 
 
 const {getQueryPath} = require('../utils/conversion.js'); 
-const {rmPath} = require('../utils/fileManager.js'); 
-const {DATA_PATH, DIRECTORY_DELIMITER} = require('../config.js'); 
+const {rmPath, getDir} = require('../utils/fileManager.js'); 
+const {DATA_PATH} = require('../config.js'); 
 
 const router = Router(); 
 
 router.get('/:filepath?', async (req, res) => {
-  const content = {
-    files: [], 
-    directories: []
-  }
-
   const query = req.params.filepath || ''; // another path || root path 
   const requestPath = getQueryPath(query); 
 
-  try {
-    const entrys = await fs.promises.readdir(requestPath)
-    entrys.forEach(entry => {
-      const targetPath = path.join(requestPath, entry);
-      const isDirectory = fs.lstatSync(targetPath).isDirectory();
+  let content; 
 
-      if (isDirectory) {
-        content.directories.push(entry); 
-      } else {
-        content.files.push(entry); 
-      }
-    })
+  try {
+    content = await getDir(requestPath)
   } catch(err) {
     return res.status(404).json({
       "Error": "404 Resource not found."
