@@ -4,7 +4,8 @@ const path = require('path');
 const fs = require('fs'); 
 
 
-const {getQueryPath} = require('../utils/conversion.js')
+const {getQueryPath} = require('../utils/conversion.js'); 
+const {rmPath} = require('../utils/fileManager.js'); 
 const {DATA_PATH, DIRECTORY_DELIMITER} = require('../config.js'); 
 
 const router = Router(); 
@@ -15,8 +16,7 @@ router.get('/:filepath?', async (req, res) => {
     directories: []
   }
 
-  const query = req.params.filepath || ''; // another path || root path
-  
+  const query = req.params.filepath || ''; // another path || root path 
   const requestPath = getQueryPath(query); 
 
   try {
@@ -52,18 +52,7 @@ router.delete('/:filepath?', async (req, res) => {
 
   try {
     const isDirectory = fs.lstatSync(requestPath).isDirectory(); 
-
-    if (isDirectory) {
-      fs.rmSync(requestPath, {recursive: true, force: true});
-    } else {
-      fs.unlinkSync(requestPath, (err) => {
-        if (err) {
-          return res.status(500).json({
-            "Error": "500 Internal server error"
-          }); 
-        }
-      }); 
-    }
+    rmPath(requestPath, isDirectory, res);
   } catch(err) {
     console.log(err); 
     return res.status(404).json({
