@@ -22,15 +22,23 @@ function rmPath(path, isDirectory, res) {
 
 
 async function getDir(requestPath) {
-  const content = []; 
+  const folders = [{
+    name: '..', 
+    size: '-', 
+    extension: '-', 
+    birthday: '-', 
+    dir: true
+  }]; 
+  const files = []; 
+
   const entrys = await fs.promises.readdir(requestPath)
   
   entrys.forEach(entry => {
     const targetPath = path.join(requestPath, entry);
     const target = fs.lstatSync(targetPath);
-    console.log(target); 
+
     if (target.isDirectory()) {
-      content.push({
+      folders.push({
         name: entry, 
         size: '-', 
         extension: '-',
@@ -38,7 +46,7 @@ async function getDir(requestPath) {
         birthday: target.birthtimeMs
       }); 
     } else {
-      content.push({
+      files.push({
         name: entry, 
         size: target.size, //bytes
         extension: entry.split('.')[1],
@@ -48,7 +56,7 @@ async function getDir(requestPath) {
     }
   })
 
-  return content; 
+  return folders.concat(files); 
 }
 
 module.exports = {
