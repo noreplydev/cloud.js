@@ -33,8 +33,6 @@ router.get('/:filepath?', async (req, res) => {
   return res.json({
     "root_directory": path.basename(DATA_PATH),
     "content": content, 
-    "files_count": content.files.length,
-    "directory_count": content.directories.length
   }); 
 });
 

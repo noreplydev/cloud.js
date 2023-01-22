@@ -2,6 +2,7 @@ const {PORT, DATA_PATH} = require('./config.js');
 const express = require('express');
 const fileUpload = require('express-fileupload'); 
 const path = require('path'); 
+const cors = require('cors'); 
 
 //ROUTES 
 const root = require('./routes/root.js'); 
@@ -12,6 +13,7 @@ const stats = require('./routes/stats.js');
 const app = express(); 
 
 //middlewares
+app.use(cors()); 
 app.use(fileUpload()); 
 
 app.use('/', root); 
