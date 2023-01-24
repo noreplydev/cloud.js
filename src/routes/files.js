@@ -25,6 +25,7 @@ router.get('/:filepath?', async (req, res) => {
       return res.status(200).download(requestPath); 
     }
   } catch(err) {
+    console.log(err); 
     return res.status(404).json({
       "Error": "404 Resource not found."
     }); 

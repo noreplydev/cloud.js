@@ -14,8 +14,13 @@ function getQueryPath(query) {
   return requestedPath;
 }
 
+function getExtension(targetPath) {
+  const extension = path.extname(targetPath); 
+  return extension === '' ? '-' : extension; 
+}
 
 module.exports = {
-  getQueryPath
+  getQueryPath, 
+  getExtension
 }
 
