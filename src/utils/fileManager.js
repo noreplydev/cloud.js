@@ -1,6 +1,6 @@
 const fs = require('fs'); 
 const path = require('path'); 
-const {getExtension} = require('./conversion.js'); 
+const {getExtension, getDownloadURL} = require('./conversion.js'); 
 
 // if it is a directory it will remove recursively
 // otherwise will remove the file
@@ -52,7 +52,8 @@ async function getDir(requestPath) {
         size: target.size, //bytes
         extension: getExtension(targetPath),   
         dir: false, 
-        birthday: target.birthtimeMs
+        birthday: target.birthtimeMs, 
+        url: getDownloadURL(targetPath)
       }); 
     }
   })

@@ -13,5 +13,6 @@
 module.exports = {
   PORT: 3000, 
   DATA_PATH: '/Users/cristian/Downloads',
-  DIRECTORY_DELIMITER: '+' 
+  DIRECTORY_DELIMITER: '+', 
+  OS: process.platform
 } 

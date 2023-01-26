@@ -1,5 +1,5 @@
 const path = require('path'); 
-const {DATA_PATH, DIRECTORY_DELIMITER} = require('../config.js'); 
+const {DATA_PATH, DIRECTORY_DELIMITER, OS} = require('../config.js'); 
 
 function getQueryPath(query) {
   const segments = query.split(DIRECTORY_DELIMITER); 
@@ -14,6 +14,16 @@ function getQueryPath(query) {
   return requestedPath;
 }
 
+function getDownloadURL(targetPath) {
+  const slash = OS === 'win32' ? '\\' : '/';  
+  const segmentsCount = DATA_PATH.split(slash).length; 
+  const urlArray = targetPath.split(slash); 
+
+  return 'files/' + urlArray
+    .splice(segmentsCount, urlArray.length-1)
+    .join(slash);  
+}
+
 function getExtension(targetPath) {
   const extension = path.extname(targetPath); 
   return extension === '' ? '-' : extension; 
@@ -21,6 +31,7 @@ function getExtension(targetPath) {
 
 module.exports = {
   getQueryPath, 
-  getExtension
+  getExtension, 
+  getDownloadURL
 }
 
