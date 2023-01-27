@@ -1,18 +1,38 @@
+const fs = require('fs'); 
+const path = require('path'); 
 
-//CONFIGURATIONS: 
-// PORT: Listen port for the server
-// DATA_PATH: Here goes the files storage path
-    // win -> D:\\files\my-server\...
-    // linux -> /server/my-files/...
-// DIRECTORY_DELIMITER: https://server.ex/directory+nested+final-file.txt 
-    // e.g: *, +, _
-    // this delimiter can not be the same character of a file or folder otherwise
-    // the server will assume that the sample-file.txt is /sample/file.txt if we use -
-    // as a delimiter. 
+function getConfig() {
+  const targetPath = path.resolve(__dirname, '../cloudjs.config'); 
+  const data = fs.readFileSync(targetPath, {encoding: 'utf8', flag: 'r'}); 
+  
+  const lines = data.split('\n');
+  let config = {}; 
+
+  for(let line of lines) {
+    const [directive] = line.split('#');
+
+    // empty spaces
+    if(!directive.trim().length) {
+      continue; 
+    } 
+
+    let [key, value] = directive.split(':'); 
+    value = value.replace(/\s/g, '');  
+    config[key] = value; 
+  }
+
+  return config; 
+}
+
+const config = getConfig();  
 
 module.exports = {
-  PORT: 3000, 
-  DATA_PATH: '/Users/cristian/Downloads',
-  DIRECTORY_DELIMITER: '+', 
-  OS: process.platform
-} 
+  DATA_PATH: config.DATA_PATH,
+  PORT: config.PORT, 
+  DIRECTORY_DELIMITER: config.DIRECTORY_DELIMITER
+}
+
+
+/*
+ *
+ * */

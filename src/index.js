@@ -1,4 +1,4 @@
-const {PORT, DATA_PATH} = require('./config.js'); 
+const {hola, PORT, DATA_PATH} = require('./config.js'); 
 const express = require('express');
 const fileUpload = require('express-fileupload'); 
 const path = require('path'); 
