@@ -14,13 +14,13 @@ router.get('/:filepath?', async (req, res) => {
   const query = req.params.filepath || ''; // another path || root path 
   const requestPath = getQueryPath(query); 
 
-  let content; 
+  let dirData; 
 
   try {
     console.log(requestPath);
      
     if (fs.lstatSync(requestPath).isDirectory()) {
-      content = await getDir(requestPath)
+      dirData = await getDir(requestPath)
     } else {
       return res.status(200).download(requestPath); 
     }
@@ -33,7 +33,8 @@ router.get('/:filepath?', async (req, res) => {
   
   return res.json({
     "root_directory": path.basename(DATA_PATH),
-    "content": content, 
+    "content": dirData.content,
+    "folder_usage": dirData.extensions 
   }); 
 });
 
