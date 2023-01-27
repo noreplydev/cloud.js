@@ -30,6 +30,7 @@ async function getDir(requestPath) {
     dir: true
   }]; 
   const files = []; 
+  const extensions = []; 
 
   const entrys = await fs.promises.readdir(requestPath)
   
@@ -47,19 +48,55 @@ async function getDir(requestPath) {
       }); 
     } else {
       const filename = entry.split('.'); 
+      const extension = getExtension(targetPath); 
+      
       files.push({
         name: filename[0] === '' ? '.'+filename[1] : filename[0], 
         size: target.size, //bytes
-        extension: getExtension(targetPath),   
+        extension: extension,   
         dir: false, 
         birthday: target.birthtimeMs, 
         url: getDownloadURL(targetPath)
       }); 
+      extensions.push(extension); 
     }
   })
-
-  return folders.concat(files); 
+  
+  const extAverage = getExtAverage(extensions); 
+  return {
+    content: folders.concat(files),
+    extensions: extAverage
+  }; 
 }
+
+function getExtAverage(array) {
+  let average = {}; 
+
+  for (let ext of array) {
+    average[ext] = (average[ext] || 0) + 1; 
+  }
+
+  const sorted = Object.entries(average).sort((a, b) => {
+    if(a[1] === b[1]) return 0; 
+    if ((a[1] - b[1]) > 0) {
+      return -1; 
+    } 
+    return 1;
+  }); 
+  
+  const total = sorted.reduce((acc, curr) => {
+    return (acc ? acc : 0) + curr[1]; 
+  }, undefined)
+
+  // use only the first 5
+  const mostUsed = sorted.slice(0, 4); 
+  for (let current of mostUsed) {
+    const number =  (current[1] * 100) / total;  
+    current[1] = Math.ceil(number) + '%'
+  }
+  return mostUsed; 
+}
+
 
 module.exports = {
   rmPath, 
