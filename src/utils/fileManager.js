@@ -37,13 +37,14 @@ async function getDir(requestPath) {
   const files = []; 
   const extensions = []; 
 
-  const entrys = await fs.promises.readdir(requestPath)
-  
+  const entrys = await fs.promises.readdir(requestPath); 
+  let tSize = 0; // total size of the current folder
+
   entrys.forEach(entry => {
     const targetPath = path.join(requestPath, entry);
     const target = fs.lstatSync(targetPath);
-
     // current entry creation date and time
+  
     const [date, time] = dateFormatter(target.birthtimeMs); 
     
     if (target.isDirectory()) {
@@ -59,10 +60,13 @@ async function getDir(requestPath) {
     } else {
       const filename = entry.split('.'); 
       const extension = getExtension(targetPath); 
+      
+     // increment the total size with the current filesize
+      tSize += target.size;
 
       files.push({
         name: filename[0] === '' ? '.'+filename[1] : filename[0], 
-        size: bytesToHuman(target.size), //bytes
+        size: target.size, //bytes, first save bytes for then get the percentage
         extension: extension,   
         dir: false, 
         created_on: date, 
@@ -76,7 +80,8 @@ async function getDir(requestPath) {
   const extAverage = getExtAverage(extensions); 
   return {
     content: folders.concat(files),
-    extensions: extAverage
+    extensions: extAverage, 
+    folder_total_size: bytesToHuman(tSize), 
   }; 
 }
 
