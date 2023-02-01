@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path'); 
 
 function getConfig() {
-  const targetPath = path.resolve(__dirname, '../cloudjs.config'); 
+  const targetPath = path.resolve('/etc/cloudjs.config'); 
   const data = fs.readFileSync(targetPath, {encoding: 'utf8', flag: 'r'}); 
   
   const lines = data.split('\n');

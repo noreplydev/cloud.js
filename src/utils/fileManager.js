@@ -77,6 +77,12 @@ async function getDir(requestPath) {
     }
   })
   
+  files.forEach(file => {
+    const percentage = (file.size * 100) / tSize;
+    file.usage_on_folder = percentage.toFixed(2) + '%'; 
+    file.size = bytesToHuman(file.size); 
+  })
+
   const extAverage = getExtAverage(extensions); 
   return {
     content: folders.concat(files),

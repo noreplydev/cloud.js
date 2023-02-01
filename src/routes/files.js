@@ -31,8 +31,8 @@ router.get('/:filepath?', async (req, res) => {
     }); 
   } 
   
+  console.log(dirData.folder_total_size); 
   return res.json({
-    "root_directory": path.basename(DATA_PATH),
     "content": dirData.content,
     "folder_usage": dirData.extensions, 
     "folder_total_size": dirData.folder_total_size, 
