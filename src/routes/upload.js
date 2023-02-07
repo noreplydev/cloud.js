@@ -1,8 +1,13 @@
 const {Router} = require('express'); 
+
 const router = Router();
 const path = require('path'); 
 
 const {DATA_PATH} = require('../config.js'); 
+const enabledUpload = require('../middlewares/enabledUpload.js'); 
+
+// middleware for upload config
+router.use(enabledUpload); 
 
 router.post('/', (req, res) => {
   let file; 
@@ -15,8 +20,8 @@ router.post('/', (req, res) => {
 
   file = req.files.file; 
   const FILES_PATH= path.join(DATA_PATH, file.name);
-  console.log(FILES_PATH);   
 
+  console.log(FILES_PATH);   
   file.mv(FILES_PATH, (err) => {
     if (err) {
       console.log('err', err)

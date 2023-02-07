@@ -17,7 +17,13 @@ function getConfig() {
     } 
 
     let [key, value] = directive.split(':'); 
-    value = value.replace(/\s/g, '');  
+    value = value.replace(/\s/g, ''); // remove empty spaces  
+
+    if (value === 'false' || value === 'true') {
+      config[key] = (value !== 'false');  
+      continue; 
+    }
+    
     config[key] = value; 
   }
 
@@ -25,14 +31,5 @@ function getConfig() {
 }
 
 const config = getConfig();  
+module.exports = {...config}
 
-module.exports = {
-  DATA_PATH: config.DATA_PATH,
-  PORT: config.PORT, 
-  DIRECTORY_DELIMITER: config.DIRECTORY_DELIMITER
-}
-
-
-/*
- *
- * */
