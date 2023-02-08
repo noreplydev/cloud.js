@@ -6,7 +6,7 @@ function enabledUpload(req, res, next) {
   console.log(ENABLE_UPLOAD)
   // if on config: upload = false
   if (!ENABLE_UPLOAD) {
-    res.status(403).json({"Error": "403 Forbidenn"}); 
+    return res.status(403).json({"Error": "403 Forbidenn"}); 
   }
 
   next(); 
