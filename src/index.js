@@ -13,7 +13,15 @@ const app = express();
 
 //middlewares
 app.use(cors()); 
-app.use(fileUpload()); 
+app.use(fileUpload({
+  limits: {
+    fileSize: 200000000 
+  }, 
+  abortOnLimit: true, 
+  limitHandler: (req, res, next) => {
+    res.status(413).json({"Error": "The request file size exceeds the limits"}); 
+  }
+})); 
 
 app.use('/', root);  
 app.use('/upload', upload);
