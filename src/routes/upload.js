@@ -9,7 +9,7 @@ const enabledUpload = require('../middlewares/enabledUpload.js');
 // middleware for upload config
 router.use(enabledUpload); 
 
-router.post('/:path', (req, res) => {
+router.post(['/', '/:path'], (req, res) => {
   let file; 
 
   if (!req.files || Object.keys(req.files) === 0) {
@@ -40,7 +40,10 @@ router.post('/:path', (req, res) => {
 function getPath(string, filename) {
   const separator = process.platform === 'win32' ? '\\' : '/'; 
 
-  const segments = string.split(DIRECTORY_DELIMITER); 
+  // handle / instead of   /:path
+  const segments = string 
+    ? string.split(DIRECTORY_DELIMITER)
+    : []
   const relative = segments.join(separator); 
   return path.join(DATA_PATH, relative, filename); 
 }
