@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 205.94 216.58">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #898989;
+        stroke-miterlimit: 10;
+      }
+    </style>
+  </defs>
+  <g id="Capa_1" data-name="Capa 1">
+    <path class="cls-1" d="M200,190.52" transform="translate(-97.03 -91.54)"/>
+    <polyline class="cls-1" points="204.92 157.49 102.97 216 1.02 157.49"/>
+    <polygon class="cls-1" points="205.27 156.6 204.92 156.86 102.97 109.34 1.02 156.86 0.67 156.6 102.97 0.91 205.27 156.6"/>
+    <line class="cls-1" x1="102.97" y1="2.67" x2="102.97" y2="216"/>
+  </g>
+</svg>

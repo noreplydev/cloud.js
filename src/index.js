@@ -23,7 +23,7 @@ app.use(fileUpload({
   }
 })); 
 
-app.use('/', root);  
+app.use('/', express.static('public')); 
 app.use('/upload', upload);
 app.use('/files', files); 
 app.use('/isAlive', (req, res) => {
