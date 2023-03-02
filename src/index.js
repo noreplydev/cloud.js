@@ -1,8 +1,11 @@
-const {PORT, DATA_PATH} = require('./config.js'); 
 const express = require('express');
 const fileUpload = require('express-fileupload'); 
 const path = require('path'); 
 const cors = require('cors'); 
+
+//ENVIRONMENT VARIABLES
+require('dotenv').config();
+const {PORT} = process.env; 
 
 //ROUTES 
 const root = require('./routes/root.js'); 

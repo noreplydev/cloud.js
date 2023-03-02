@@ -6,7 +6,6 @@ const fs = require('fs');
 
 const {getQueryPath} = require('../utils/conversion.js'); 
 const {rmPath, getDir} = require('../utils/fileManager.js'); 
-const {DATA_PATH} = require('../config.js'); 
 
 const router = Router(); 
 
@@ -31,7 +30,6 @@ router.get('/:filepath?', async (req, res) => {
     }); 
   } 
   
-  console.log(dirData.folder_total_size); 
   return res.json({
     "content": dirData.content,
     "folder_usage": dirData.extensions, 

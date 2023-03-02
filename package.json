@@ -5,29 +5,18 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./src/index.js",
-    "start": "node ./src/index.js",
-    "compile": "pkg --debug src/index.js -c package.json"
+    "start": "node ./src/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "express-fileupload": "^1.4.0",
-    "pkg": "^5.8.0"
+    "express-fileupload": "^1.4.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
-  }, 
-  "pkg": {
-    "scripts": "src/**/*.js",
-    "targets": [ 
-      "node14-linux", 
-      "node14-linux-arm64", 
-      "node14-macos", 
-      "node14-win" 
-    ],
-    "outputPath": "dist"
   }
 }

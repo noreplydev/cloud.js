@@ -3,7 +3,7 @@ const {Router} = require('express');
 const router = Router();
 const path = require('path'); 
 
-const {DATA_PATH, DIRECTORY_DELIMITER} = require('../config.js'); 
+const {DATA_PATH, DIRECTORY_DELIMITER} = process.env; 
 const enabledUpload = require('../middlewares/enabledUpload.js'); 
 
 // middleware for upload config

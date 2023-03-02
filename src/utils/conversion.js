@@ -1,5 +1,5 @@
 const path = require('path'); 
-const {DATA_PATH, DIRECTORY_DELIMITER, OS} = require('../config.js'); 
+const {DATA_PATH, DIRECTORY_DELIMITER} = process.env; 
 
 function getQueryPath(query) {
   const segments = query.split(DIRECTORY_DELIMITER); 
