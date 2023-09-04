@@ -13,6 +13,6 @@ To clone the project we can use
 git clone -b dist https://github.com/sanchez-cristian/cloud.js
 ```
 
-With `npm run dev` we will start the server on the port 3000. This configuration and others can change on the .env file. The react app also uses a config file, so, to edit the front configurations we can edit on `/public/config.js`.
+With `npm run dev` we will start the server on the port 3000. The configuration of the server is on the `src/config.js` file. For the client side configuration we need to edit the `public/config.js` file.
 
 
